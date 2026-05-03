@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tyne Artisan Bakery — Sourdough, Pastries & Subscriptions in Newcastle</title>
+<meta name="description" content="Independent Newcastle bakery making slow-fermented sourdough, hand-laminated viennoiserie, celebration cakes and weekly bread subscriptions. Local delivery and click-and-collect.">
+<style>
+:root{--dark:#3D2B1F;--dark-soft:#5a3e2e;--cinnamon:#B5541C;--sage:#3D5C45;--sage-light:#6B8A73;--wheat:#C9A84C;--cream:#FFF8F0;--cream-light:#FBF4E8;--blush:#E8C8B5;--blush-deep:#C9897A;--charcoal:#4A3728;--strawberry:#d94560;--shadow-soft:0 4px 20px rgba(61,43,31,.08);--shadow-mid:0 8px 32px rgba(61,43,31,.15);--shadow-deep:0 16px 48px rgba(61,43,31,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><g><ellipse cx='14' cy='17' rx='10' ry='5' fill='%23C4622D'/><ellipse cx='14' cy='14' rx='9' ry='4.5' fill='%23D4845A'/><path d='M7 13 Q11 9 14 11 Q17 9 21 13' stroke='%23FFFFFF' stroke-width='1' fill='none'/></g></svg>") 14 14,auto}
+a,button,.product-card,.toggle:not(.disabled){cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><g><rect x='6' y='18' width='20' height='10' rx='2' fill='%23C9897A'/><rect x='9' y='12' width='14' height='8' rx='1.5' fill='%23E8C8B5'/><rect x='14' y='5' width='4' height='8' rx='1' fill='%23B5541C'/><ellipse cx='16' cy='4' rx='2' ry='2.5' fill='%23FAD460'/><circle cx='12' cy='15' r='1.2' fill='%23C9897A'/><circle cx='16' cy='15' r='1.2' fill='%23C9897A'/><circle cx='20' cy='15' r='1.2' fill='%23C9897A'/></g></svg>") 16 16,pointer}
+img{max-width:100%;display:block}ul{list-style:none}
+
+.floating-decor{position:fixed;pointer-events:none;z-index:1;opacity:.55;animation:float-rotate 18s ease-in-out infinite}
+.floating-decor.d1{top:12%;right:5%;animation-duration:22s}
+.floating-decor.d2{top:35%;left:3%;animation-duration:18s;animation-delay:-3s}
+.floating-decor.d3{top:60%;right:8%;animation-duration:25s;animation-delay:-7s}
+.floating-decor.d4{top:80%;left:6%;animation-duration:20s;animation-delay:-12s}
+.floating-decor.d5{top:22%;left:50%;animation-duration:28s;animation-delay:-2s}
+.floating-decor.d6{top:70%;right:30%;animation-duration:24s;animation-delay:-9s}
+@keyframes float-rotate{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-25px) rotate(8deg)}50%{transform:translateY(-12px) rotate(-5deg)}75%{transform:translateY(-30px) rotate(12deg)}}
+@keyframes spin-slow{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes slide-up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slide-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+.cookie-banner{position:fixed;bottom:20px;left:20px;right:20px;max-width:720px;margin:0 auto;z-index:2000;background:var(--cream);border:2px solid var(--blush);border-radius:16px;padding:22px 26px;box-shadow:var(--shadow-deep);animation:slide-up .6s cubic-bezier(.34,1.56,.64,1)}
+.cookie-banner.hidden{display:none}
+.cookie-header{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.cookie-icon{flex-shrink:0;width:44px;height:44px;background:var(--wheat);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulse 2.5s ease-in-out infinite}
+.cookie-banner h3{font-size:16px;font-weight:700;color:var(--dark)}
+.cookie-banner p{font-size:13px;color:var(--charcoal);margin-bottom:16px;line-height:1.55}
+.cookie-banner p strong{color:var(--cinnamon)}
+.cookie-buttons{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cookie-btn{padding:10px 22px;border-radius:24px;font-family:inherit;font-size:13px;font-weight:600;border:none;transition:all .2s;letter-spacing:.4px}
+.cookie-btn-accept{background:var(--dark);color:var(--cream);flex:1;min-width:140px}
+.cookie-btn-accept:hover{background:var(--cinnamon);transform:scale(1.02)}
+.cookie-btn-reject{background:transparent;color:var(--charcoal);border:1.5px solid var(--blush-deep);position:relative;transition:transform .3s cubic-bezier(.68,-.55,.27,1.55)}
+.cookie-btn-manage{background:var(--cream-light);color:var(--charcoal);text-decoration:underline;padding:10px 16px;border:1px solid var(--blush)}
+.cookie-btn-manage:hover{background:var(--blush)}
+
+.cookie-modal-backdrop{position:fixed;inset:0;background:rgba(61,43,31,.6);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px}
+.cookie-modal-backdrop.shown{display:flex}
+.cookie-modal{background:var(--cream);border-radius:18px;padding:32px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-deep);border:2px solid var(--blush)}
+.cookie-modal h3{font-family:'Playfair Display',Georgia,serif;font-size:26px;margin-bottom:8px;color:var(--dark)}
+.cookie-modal>p{font-size:13px;color:var(--charcoal);margin-bottom:22px}
+.cookie-pref{background:var(--cream-light);border:1px solid var(--blush);border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.cookie-pref-text{flex:1}
+.cookie-pref-name{font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px}
+.cookie-pref-desc{font-size:12px;color:var(--charcoal);line-height:1.5}
+.cookie-pref-required{color:var(--sage);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.toggle{position:relative;width:46px;height:26px;background:var(--blush-deep);border-radius:13px;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--sage)}
+.toggle.disabled{background:var(--blush)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{transform:translateX(20px)}
+.cookie-modal-footer{display:flex;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--blush)}
+.cookie-modal-footer button{flex:1}
+
+.skip-link{position:absolute;top:-40px;left:16px;background:var(--dark);color:var(--cream);padding:10px 18px;z-index:100;border-radius:0 0 8px 8px;font-size:13px;font-weight:600}
+.skip-link:focus{top:0}
+
+.announcement-bar{background:linear-gradient(90deg,var(--dark) 0%,var(--cinnamon) 50%,var(--dark) 100%);background-size:200% 100%;animation:shimmer 8s linear infinite;color:var(--cream);text-align:center;padding:10px 16px;font-size:12px;font-weight:500;letter-spacing:.4px}
+@keyframes shimmer{0%{background-position:0 0}100%{background-position:200% 0}}
+.announcement-bar a{color:var(--wheat);text-decoration:none;font-weight:700;border-bottom:1px dotted var(--wheat)}
+
+header.main-header{background:rgba(255,248,240,.95);border-bottom:1px solid var(--blush);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px)}
+.header-inner{max-width:1280px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--dark)}
+.logo-mark{width:48px;height:48px;background:linear-gradient(135deg,var(--dark) 0%,var(--cinnamon) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-soft);transition:transform .3s}
+.logo:hover .logo-mark{transform:rotate(-15deg) scale(1.1)}
+.logo-text{display:flex;flex-direction:column}
+.logo-name{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;line-height:1;letter-spacing:.3px}
+.logo-tag{font-size:9.5px;color:var(--cinnamon);letter-spacing:1.6px;text-transform:uppercase;font-weight:600;margin-top:2px}
+nav.main-nav ul{display:flex;gap:32px}
+nav.main-nav a{text-decoration:none;color:var(--dark);font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid transparent;transition:border-color .2s}
+nav.main-nav a:hover,nav.main-nav a:focus{border-bottom-color:var(--wheat);outline:none}
+.header-actions{display:flex;align-items:center;gap:12px}
+.header-icon-btn{width:40px;height:40px;border-radius:50%;background:var(--cream-light);border:1px solid var(--blush);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.header-icon-btn:hover{background:var(--blush);transform:translateY(-2px)}
+.cart-btn-main{background:var(--cinnamon);color:#fff;padding:10px 20px 10px 16px;border-radius:24px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:8px;border:none;transition:all .2s;box-shadow:0 2px 8px rgba(181,84,28,.25)}
+.cart-btn-main:hover{background:var(--dark);transform:translateY(-2px)}
+.cart-count{background:var(--wheat);color:var(--dark);font-size:11px;font-weight:700;border-radius:10px;padding:2px 7px;min-width:20px;text-align:center}
+
+.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--dark-soft) 100%);color:var(--cream);padding:90px 28px 110px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-150px;right:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,.18) 0%,transparent 70%);animation:spin-slow 40s linear infinite}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(181,84,28,.15) 0%,transparent 70%);animation:spin-slow 50s linear infinite reverse}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.15fr 1fr;gap:60px;align-items:center;position:relative;z-index:2}
+.hero-eyebrow{display:inline-block;background:rgba(201,168,76,.15);color:var(--wheat);padding:6px 14px;border-radius:16px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:22px;border:1px solid rgba(201,168,76,.3)}
+.hero-content h1{font-family:'Playfair Display',Georgia,serif;font-size:56px;line-height:1.05;margin-bottom:22px;font-weight:400}
+.hero-content h1 strong{color:var(--wheat);font-weight:700;font-style:italic}
+.hero-content .lead{font-size:17px;color:var(--blush);margin-bottom:30px;max-width:480px;line-height:1.65}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:30px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;transition:all .25s;border:none;letter-spacing:.3px}
+.btn-primary{background:var(--wheat);color:var(--dark)}
+.btn-primary:hover{background:var(--cream);transform:translateY(-3px);box-shadow:0 8px 20px rgba(201,168,76,.35)}
+.btn-secondary{background:transparent;color:var(--cream);border:1.5px solid rgba(255,248,240,.5)}
+.btn-secondary:hover{background:rgba(255,255,255,.08);border-color:var(--cream)}
+.hero-stats{display:flex;gap:36px;margin-top:44px;padding-top:28px;border-top:1px solid rgba(232,200,181,.2)}
+.hero-stat-num{font-family:'Playfair Display',Georgia,serif;font-size:30px;font-weight:700;color:var(--wheat);line-height:1}
+.hero-stat-label{font-size:11px;color:var(--blush);letter-spacing:.8px;text-transform:uppercase;margin-top:6px;font-weight:600}
+
+.hero-illustration{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.hero-plate{width:90%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--blush) 0%,var(--blush-deep) 60%,var(--dark-soft) 100%);position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 -8px 16px rgba(0,0,0,.1);animation:spin-slow 60s linear infinite}
+.hero-loaf-svg{position:absolute;inset:15%;animation:pulse 4s ease-in-out infinite}
+.hero-orbit{position:absolute;inset:0;animation:spin-slow 30s linear infinite;pointer-events:none}
+.orbit-item{position:absolute;width:60px;height:60px;display:flex;align-items:center;justify-content:center}
+.orbit-item.i1{top:0;left:50%;transform:translateX(-50%)}
+.orbit-item.i2{right:0;top:50%;transform:translateY(-50%)}
+.orbit-item.i3{bottom:0;left:50%;transform:translateX(-50%)}
+.orbit-item.i4{left:0;top:50%;transform:translateY(-50%)}
+
+.section{padding:90px 28px;position:relative}
+.section-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2}
+.section-header{text-align:center;margin-bottom:60px}
+.section-eyebrow{display:inline-block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cinnamon);font-weight:700;margin-bottom:14px;padding:5px 14px;border:1px solid var(--cinnamon);border-radius:14px}
+.section-title{font-family:'Playfair Display',Georgia,serif;font-size:42px;font-weight:400;line-height:1.15;margin-bottom:16px;color:var(--dark)}
+.section-title em{color:var(--cinnamon);font-style:italic}
+.section-lead{font-size:16px;color:var(--charcoal);max-width:620px;margin:0 auto;line-height:1.65}
+
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.product-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-soft);transition:all .35s cubic-bezier(.165,.84,.44,1);border:1px solid var(--blush);display:flex;flex-direction:column;position:relative}
+.product-card:hover{transform:translateY(-8px) rotate(-.5deg);box-shadow:var(--shadow-mid);border-color:var(--cinnamon)}
+.product-badge{position:absolute;top:14px;right:14px;z-index:2;background:var(--strawberry);color:#fff;padding:5px 11px;border-radius:11px;font-size:10px;font-weight:700;letter-spacing:.5px;box-shadow:0 2px 6px rgba(217,69,96,.4)}
+.product-badge.bestseller{background:var(--wheat);color:var(--dark)}
+.product-badge.new{background:var(--sage);color:#fff}
+.product-img-wrap{aspect-ratio:1;overflow:hidden;position:relative;background:linear-gradient(135deg,var(--cream-light) 0%,var(--blush) 100%);display:flex;align-items:center;justify-content:center}
+.product-img-wrap>svg{width:65%;height:65%;transition:transform .4s}
+.product-card:hover .product-img-wrap>svg{transform:scale(1.1) rotate(8deg)}
+.product-img-deco{position:absolute;opacity:.4;animation:float-rotate 8s ease-in-out infinite}
+.product-img-deco.dec1{top:12%;left:12%}
+.product-img-deco.dec2{bottom:12%;right:12%;animation-delay:-3s}
+.product-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.product-cat{font-size:10px;color:var(--cinnamon);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;font-weight:700}
+.product-name{font-family:'Playfair Display',Georgia,serif;font-size:19px;font-weight:700;margin-bottom:8px;color:var(--dark);line-height:1.25}
+.product-desc{font-size:13px;color:var(--charcoal);margin-bottom:14px;flex:1;line-height:1.5}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid var(--cream-light)}
+.product-price{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;color:var(--dark)}
+.product-price small{font-size:12px;color:var(--charcoal);font-weight:400}
+.product-add{background:var(--dark);color:var(--cream);border:none;padding:9px 16px;border-radius:18px;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.3px;transition:all .25s}
+.product-add:hover,.product-add:focus{background:var(--cinnamon);transform:scale(1.06);outline:2px solid var(--wheat);outline-offset:2px}
+.product-add.added{background:var(--sage)}
+.product-allergen{background:var(--cream-light);padding:8px 14px;font-size:10px;color:var(--charcoal);border-top:1px solid var(--blush);line-height:1.4}
+.product-allergen strong{color:var(--cinnamon);font-weight:700}
+
+.subscription-section{background:linear-gradient(135deg,var(--cream-light) 0%,var(--blush) 100%);position:relative;overflow:hidden}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.sub-content h2{font-family:'Playfair Display',Georgia,serif;font-size:42px;line-height:1.1;margin-bottom:18px;color:var(--dark)}
+.sub-content h2 em{color:var(--cinnamon);font-style:italic}
+.sub-content>p{font-size:16px;color:var(--charcoal);margin-bottom:26px;line-height:1.65}
+.sub-features li{padding:12px 0;padding-left:36px;position:relative;font-size:14px;color:var(--charcoal);border-bottom:1px solid rgba(181,84,28,.18)}
+.sub-features li::before{content:'';position:absolute;left:0;top:16px;width:22px;height:22px;background:var(--sage);border-radius:50%;box-shadow:0 2px 6px rgba(61,92,69,.3)}
+.sub-features li::after{content:'';position:absolute;left:6px;top:21px;width:10px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.sub-card{background:#fff;border-radius:22px;padding:36px;box-shadow:var(--shadow-mid);border:2px solid var(--wheat);position:relative;overflow:hidden}
+.sub-card::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,var(--wheat) 0%,transparent 70%);opacity:.25}
+.sub-card-tier{display:inline-block;background:var(--wheat);color:var(--dark);padding:5px 12px;border-radius:14px;font-size:10px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:14px}
+.sub-card-name{font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:700;margin-bottom:6px;color:var(--dark)}
+.sub-card-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.sub-card-price{font-family:'Playfair Display',Georgia,serif;font-size:48px;font-weight:700;color:var(--cinnamon);line-height:1}
+.sub-card-price-period{font-size:15px;color:var(--charcoal)}
+.sub-card-strike{font-size:16px;color:var(--blush-deep);text-decoration:line-through}
+.sub-card-includes{margin:24px 0;padding:18px 0;border-top:1px solid var(--cream-light);border-bottom:1px solid var(--cream-light)}
+.sub-card-includes h4{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--cinnamon);margin-bottom:12px;font-weight:700}
+.sub-card-includes li{padding:7px 0;padding-left:26px;position:relative;font-size:14px;color:var(--charcoal)}
+.sub-card-includes li::before{content:'✓';position:absolute;left:4px;color:var(--sage);font-weight:700;font-size:14px}
+.sub-cta{width:100%;padding:14px;justify-content:center}
+
+.values-section{background:#fff}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.value-card{text-align:center;padding:36px 28px;border-radius:16px;background:var(--cream-light);border:1px solid var(--blush);transition:all .3s}
+.value-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft);border-color:var(--cinnamon)}
+.value-icon{width:72px;height:72px;background:var(--dark);border-radius:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transform:rotate(-5deg);transition:all .3s}
+.value-card:hover .value-icon{transform:rotate(5deg) scale(1.08);background:var(--cinnamon)}
+.value-card h3{font-family:'Playfair Display',Georgia,serif;font-size:22px;margin-bottom:12px;color:var(--dark)}
+.value-card p{font-size:14px;color:var(--charcoal);line-height:1.6}
+
+.testimonials-section{background:var(--dark);color:var(--cream);position:relative;overflow:hidden}
+.testimonials-section .section-title{color:var(--cream)}
+.testimonials-section .section-title em{color:var(--wheat)}
+.testimonials-section .section-eyebrow{color:var(--wheat);border-color:var(--wheat)}
+.testimonials-section .section-lead{color:var(--blush)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial{background:rgba(255,255,255,.06);border-radius:16px;padding:30px;border:1px solid rgba(232,200,181,.18);transition:all .3s}
+.testimonial:hover{transform:translateY(-4px);background:rgba(255,255,255,.1);border-color:var(--wheat)}
+.testimonial-stars{color:var(--wheat);margin-bottom:16px;font-size:18px;letter-spacing:3px}
+.testimonial-text{font-style:italic;color:var(--cream);font-size:15px;line-height:1.7;margin-bottom:22px;font-family:'Playfair Display',Georgia,serif}
+.testimonial-author{display:flex;align-items:center;gap:14px;padding-top:18px;border-top:1px solid rgba(232,200,181,.18)}
+.testimonial-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--wheat) 0%,var(--cinnamon) 100%);display:flex;align-items:center;justify-content:center;color:var(--cream);font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:17px}
+.testimonial-name{font-size:13px;font-weight:700}
+.testimonial-loc{font-size:11px;color:var(--blush);margin-top:2px}
+
+.email-section{background:var(--cream);padding:90px 28px}
+.email-card{max-width:760px;margin:0 auto;background:linear-gradient(135deg,#fff 0%,var(--cream-light) 100%);border-radius:22px;padding:48px;text-align:center;border:2px solid var(--blush);box-shadow:var(--shadow-soft)}
+.email-card h3{font-family:'Playfair Display',Georgia,serif;font-size:36px;margin-bottom:14px;color:var(--dark)}
+.email-card h3 em{color:var(--cinnamon);font-style:italic}
+.email-card>p{color:var(--charcoal);margin-bottom:26px;font-size:15px;line-height:1.6}
+.email-form{display:flex;gap:10px;max-width:520px;margin:0 auto}
+.email-input{flex:1;padding:16px 22px;font-size:15px;border:1.5px solid var(--blush);border-radius:30px;font-family:inherit;background:#fff;color:var(--dark);transition:all .2s}
+.email-input:focus{outline:2px solid var(--wheat);outline-offset:2px;border-color:var(--cinnamon)}
+.email-submit{padding:16px 30px;background:var(--cinnamon);color:#fff;border:none;border-radius:30px;font-weight:700;font-size:14px;transition:all .2s}
+.email-submit:hover{background:var(--dark);transform:translateY(-2px)}
+.email-disclaimer{font-size:11px;color:var(--charcoal);margin-top:16px;line-height:1.5}
+.email-disclaimer a{color:var(--cinnamon)}
+
+.visit-section{background:var(--cream-light)}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:980px;margin:0 auto}
+.visit-card{background:#fff;padding:36px;border-radius:16px;border:1px solid var(--blush);transition:all .3s;box-shadow:var(--shadow-soft)}
+.visit-card:hover{transform:translateY(-4px);border-color:var(--cinnamon);box-shadow:var(--shadow-mid)}
+.visit-card h3{font-family:'Playfair Display',Georgia,serif;font-size:24px;margin-bottom:16px;color:var(--dark);display:flex;align-items:center;gap:12px}
+.visit-card h3 svg{width:28px;height:28px}
+.visit-card p{font-size:14px;color:var(--charcoal);line-height:1.7;margin-bottom:14px}
+.visit-card p:last-child{margin-bottom:0}
+.visit-card strong{color:var(--cinnamon);font-weight:700}
+
+footer.main-footer{background:var(--dark);color:var(--blush);padding:70px 28px 36px}
+.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid rgba(232,200,181,.18)}
+.footer-col h4{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--wheat);margin-bottom:18px;font-weight:700}
+.footer-col li{margin-bottom:10px}
+.footer-col a{color:var(--blush);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-col a:hover,.footer-col a:focus{color:var(--cream)}
+.footer-about{font-size:13px;line-height:1.7;max-width:380px}
+.footer-about-logo{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;color:var(--cream);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.footer-bottom{max-width:1280px;margin:36px auto 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;flex-wrap:wrap;gap:14px}
+.footer-legal-links{display:flex;gap:22px}
+.footer-legal-links a{color:var(--blush);text-decoration:none}
+.footer-bottom p{color:var(--blush-deep)}
+
+.cart-drawer-backdrop{position:fixed;inset:0;background:rgba(61,43,31,.55);z-index:4000;display:none;backdrop-filter:blur(3px)}
+.cart-drawer-backdrop.shown{display:block}
+.cart-drawer{position:fixed;top:0;right:-440px;bottom:0;width:420px;max-width:90vw;background:var(--cream);z-index:4001;box-shadow:-10px 0 40px rgba(61,43,31,.3);transition:right .4s cubic-bezier(.165,.84,.44,1);display:flex;flex-direction:column}
+.cart-drawer.shown{right:0}
+.cart-drawer-header{padding:22px 26px;border-bottom:1px solid var(--blush);display:flex;align-items:center;justify-content:space-between;background:var(--dark);color:var(--cream)}
+.cart-drawer-header h3{font-family:'Playfair Display',Georgia,serif;font-size:22px}
+.cart-close-btn{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:var(--cream);font-size:20px;line-height:1}
+.cart-close-btn:hover{background:rgba(255,255,255,.2)}
+.cart-items{flex:1;padding:16px 20px;overflow-y:auto}
+.cart-empty{text-align:center;padding:60px 20px;color:var(--charcoal)}
+.cart-empty p{margin-top:14px;font-size:14px}
+.cart-empty svg{opacity:.5}
+.cart-item{display:flex;gap:14px;padding:14px;background:#fff;border-radius:10px;margin-bottom:10px;border:1px solid var(--blush);animation:slide-in .4s}
+.cart-item-img{width:64px;height:64px;border-radius:8px;background:var(--cream-light);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px}
+.cart-item-price{font-size:13px;color:var(--cinnamon);font-weight:700}
+.cart-item-controls{display:flex;align-items:center;gap:8px;margin-top:8px}
+.qty-btn{width:24px;height:24px;border-radius:50%;background:var(--cream-light);border:1px solid var(--blush);font-weight:700;color:var(--dark);font-size:14px;display:flex;align-items:center;justify-content:center}
+.qty-btn:hover{background:var(--blush)}
+.qty-display{font-size:13px;font-weight:700;min-width:20px;text-align:center}
+.cart-item-remove{margin-left:auto;background:transparent;border:none;color:var(--charcoal);font-size:11px;text-decoration:underline}
+.cart-item-remove:hover{color:var(--cinnamon)}
+.cart-footer{padding:22px 26px;border-top:1px solid var(--blush);background:var(--cream-light)}
+.cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.cart-total-label{font-size:14px;color:var(--charcoal)}
+.cart-total-amount{font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:700;color:var(--dark)}
+.cart-checkout-btn{width:100%;padding:16px;background:var(--cinnamon);color:#fff;border:none;border-radius:30px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .2s}
+.cart-checkout-btn:hover{background:var(--dark)}
+.cart-checkout-btn:disabled{opacity:.5}
+.cart-note{text-align:center;font-size:11px;color:var(--charcoal);margin-top:10px}
+
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--sage);color:#fff;padding:14px 24px;border-radius:30px;font-size:14px;font-weight:600;box-shadow:var(--shadow-mid);z-index:5000;display:flex;align-items:center;gap:10px;transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.toast.shown{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:920px){.hero-inner{grid-template-columns:1fr;gap:40px}.hero-content h1{font-size:38px}.products-grid{grid-template-columns:repeat(2,1fr)}.sub-grid{grid-template-columns:1fr;gap:36px}.values-grid{grid-template-columns:1fr;gap:18px}.testimonials-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr;gap:32px}nav.main-nav{display:none}.visit-grid{grid-template-columns:1fr}}
+@media(max-width:540px){.products-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.email-form{flex-direction:column}.section-title{font-size:28px}.hero-content h1{font-size:32px}.hero-stats{flex-wrap:wrap;gap:22px}.section{padding:60px 20px}}
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <defs>
+    <radialGradient id="strawGrad"><stop offset="0%" stop-color="#f56b85"/><stop offset="100%" stop-color="#b22b48"/></radialGradient>
+    <radialGradient id="cookGrad"><stop offset="0%" stop-color="#D4845A"/><stop offset="100%" stop-color="#9d4d23"/></radialGradient>
+  </defs>
+  <symbol id="icon-loaf" viewBox="0 0 100 70">
+    <ellipse cx="50" cy="42" rx="44" ry="24" fill="#9d4d23"/><ellipse cx="50" cy="38" rx="42" ry="22" fill="#C4622D"/><ellipse cx="50" cy="32" rx="38" ry="18" fill="#D4845A"/>
+    <path d="M22 28 Q35 18 50 22 Q65 18 78 28" stroke="#7d3a1a" stroke-width="2.5" fill="none" opacity=".7"/>
+    <path d="M28 36 Q40 26 50 30 Q60 26 72 36" stroke="#7d3a1a" stroke-width="1.8" fill="none" opacity=".5"/>
+    <ellipse cx="50" cy="26" rx="10" ry="3" fill="#7d3a1a" opacity=".4"/>
+  </symbol>
+  <symbol id="icon-pastry" viewBox="0 0 100 70">
+    <path d="M16 50 Q8 25 50 14 Q92 25 84 50 Q66 36 50 38 Q34 36 16 50Z" fill="#a78028"/>
+    <path d="M20 48 Q12 27 50 16 Q88 27 80 48 Q66 38 50 40 Q34 38 20 48Z" fill="#D4A843"/>
+    <path d="M24 46 Q34 30 50 30 Q66 30 76 46" stroke="#7c5c1c" stroke-width="2" fill="none" opacity=".7"/>
+    <circle cx="40" cy="42" r="1.5" fill="#fff" opacity=".6"/>
+    <circle cx="60" cy="42" r="1.5" fill="#fff" opacity=".6"/>
+  </symbol>
+  <symbol id="icon-cake" viewBox="0 0 100 80">
+    <ellipse cx="50" cy="68" rx="38" ry="3" fill="#000" opacity=".15"/>
+    <rect x="14" y="44" width="72" height="22" rx="5" fill="#C9897A"/>
+    <rect x="22" y="28" width="56" height="20" rx="3" fill="#E8C8B5"/>
+    <rect x="24" y="30" width="52" height="16" rx="2" fill="#D4A843" opacity=".5"/>
+    <circle cx="30" cy="34" r="2.5" fill="#d94560"/><circle cx="50" cy="32" r="3" fill="#d94560"/><circle cx="70" cy="34" r="2.5" fill="#d94560"/>
+    <circle cx="40" cy="38" r="2" fill="#d94560"/><circle cx="60" cy="38" r="2" fill="#d94560"/>
+    <rect x="46" y="12" width="8" height="18" rx="1.5" fill="#B5541C"/>
+    <ellipse cx="50" cy="10" rx="3" ry="5" fill="#FAD460"/>
+  </symbol>
+  <symbol id="icon-box" viewBox="0 0 100 80">
+    <ellipse cx="50" cy="74" rx="40" ry="3" fill="#000" opacity=".15"/>
+    <rect x="12" y="32" width="76" height="42" rx="5" fill="#6B8A73"/>
+    <rect x="12" y="32" width="76" height="12" rx="5" fill="#3D5C45"/>
+    <path d="M30 18 Q50 10 70 18 Q70 36 50 40 Q30 36 30 18Z" fill="#E8C8B5"/>
+    <path d="M30 18 Q50 14 70 18" stroke="#C9897A" stroke-width="3" fill="none"/>
+    <line x1="50" y1="14" x2="50" y2="40" stroke="#C9897A" stroke-width="3"/>
+    <text x="50" y="60" text-anchor="middle" font-family="Georgia" font-size="6" fill="#FFF8F0" opacity=".8" font-style="italic">TAB</text>
+  </symbol>
+  <symbol id="icon-wheat" viewBox="0 0 30 50">
+    <path d="M15 48 L15 12" stroke="#C9A84C" stroke-width="2"/>
+    <ellipse cx="15" cy="10" rx="5" ry="7" fill="#C9A84C"/>
+    <ellipse cx="10" cy="18" rx="4" ry="6" fill="#D4A843" transform="rotate(-22 10 18)"/>
+    <ellipse cx="20" cy="18" rx="4" ry="6" fill="#D4A843" transform="rotate(22 20 18)"/>
+    <ellipse cx="11" cy="28" rx="4" ry="5.5" fill="#C9A84C" opacity=".85" transform="rotate(-18 11 28)"/>
+    <ellipse cx="19" cy="28" rx="4" ry="5.5" fill="#C9A84C" opacity=".85" transform="rotate(18 19 28)"/>
+  </symbol>
+  <symbol id="icon-strawberry" viewBox="0 0 30 36">
+    <path d="M15 34 Q4 28 4 14 Q4 6 15 6 Q26 6 26 14 Q26 28 15 34Z" fill="url(#strawGrad)"/>
+    <ellipse cx="10" cy="14" rx="0.8" ry="1.2" fill="#FAD460"/><ellipse cx="15" cy="11" rx="0.8" ry="1.2" fill="#FAD460"/>
+    <ellipse cx="20" cy="14" rx="0.8" ry="1.2" fill="#FAD460"/><ellipse cx="12" cy="20" rx="0.8" ry="1.2" fill="#FAD460"/>
+    <ellipse cx="18" cy="20" rx="0.8" ry="1.2" fill="#FAD460"/><ellipse cx="15" cy="26" rx="0.8" ry="1.2" fill="#FAD460"/>
+    <ellipse cx="15" cy="9" rx="3" ry="1.5" fill="#3D5C45"/>
+    <path d="M15 8 L8 3 L11 8 L6 6 L10 10 L4 10 L9 12 L15 10 Z" fill="#3D5C45"/>
+    <path d="M15 8 L22 3 L19 8 L24 6 L20 10 L26 10 L21 12 L15 10 Z" fill="#3D5C45"/>
+  </symbol>
+  <symbol id="icon-cart" viewBox="0 0 24 24">
+    <path d="M3 3h2l1 9h13l1.5-7H7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="9" cy="19" r="1.8" fill="#fff"/><circle cx="17" cy="19" r="1.8" fill="#fff"/>
+  </symbol>
+  <symbol id="icon-cart-empty" viewBox="0 0 80 80">
+    <path d="M10 20h8l4 36h44l6-28H22" stroke="#C9897A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="32" cy="66" r="4" stroke="#C9897A" stroke-width="2" fill="none"/>
+    <circle cx="60" cy="66" r="4" stroke="#C9897A" stroke-width="2" fill="none"/>
+  </symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24">
+    <circle cx="11" cy="11" r="6" stroke="#3D2B1F" stroke-width="2" fill="none"/>
+    <line x1="16" y1="16" x2="20" y2="20" stroke="#3D2B1F" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M12 22 Q9 14 4 10 Q9 7 13 12 Q15 7 20 10 Q15 14 12 22Z" fill="#FFF8F0"/></symbol>
+  <symbol id="icon-truck" viewBox="0 0 24 24">
+    <rect x="2" y="8" width="11" height="9" rx="1" fill="none" stroke="#FFF8F0" stroke-width="1.7"/>
+    <path d="M13 11h5l3 3v3h-8z" fill="none" stroke="#FFF8F0" stroke-width="1.7"/>
+    <circle cx="7" cy="18" r="2" fill="#FFF8F0"/><circle cx="17" cy="18" r="2" fill="#FFF8F0"/>
+  </symbol>
+  <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9c-1.5-3.5 1-7 4.5-7 2 0 3.5 1 4.5 2.5C13 6 14.5 5 16.5 5c3.5 0 6 3.5 4.5 7-2 4.5-9 9-9 9z" fill="#FFF8F0"/></symbol>
+  <symbol id="icon-shop" viewBox="0 0 32 32">
+    <path d="M5 12l2-6h18l2 6" stroke="#3D2B1F" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <rect x="5" y="12" width="22" height="14" stroke="#3D2B1F" stroke-width="2" fill="none"/>
+    <rect x="13" y="18" width="6" height="8" stroke="#3D2B1F" stroke-width="1.5" fill="none"/>
+  </symbol>
+  <symbol id="icon-market" viewBox="0 0 32 32">
+    <path d="M5 14l3-7h16l3 7" stroke="#3D2B1F" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M5 14h22v3H5z" fill="#C9A84C" stroke="#3D2B1F" stroke-width="1.5"/>
+    <rect x="7" y="17" width="18" height="10" stroke="#3D2B1F" stroke-width="1.5" fill="none"/>
+  </symbol>
+  <symbol id="icon-cookie" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="14" fill="url(#cookGrad)"/>
+    <circle cx="11" cy="12" r="1.8" fill="#3D2B1F"/><circle cx="20" cy="13" r="2" fill="#3D2B1F"/>
+    <circle cx="14" cy="19" r="1.5" fill="#3D2B1F"/><circle cx="21" cy="20" r="1.8" fill="#3D2B1F"/>
+    <circle cx="10" cy="22" r="1.2" fill="#3D2B1F"/>
+  </symbol>
+</svg>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<svg class="floating-decor d1" width="34" height="56" aria-hidden="true"><use href="#icon-wheat"/></svg>
+<svg class="floating-decor d2" width="40" height="48" aria-hidden="true"><use href="#icon-strawberry"/></svg>
+<svg class="floating-decor d3" width="50" height="35" aria-hidden="true"><use href="#icon-pastry"/></svg>
+<svg class="floating-decor d4" width="34" height="56" aria-hidden="true"><use href="#icon-wheat"/></svg>
+<svg class="floating-decor d5" width="38" height="46" aria-hidden="true"><use href="#icon-strawberry"/></svg>
+<svg class="floating-decor d6" width="48" height="40" aria-hidden="true"><use href="#icon-pastry"/></svg>
+
+<div class="announcement-bar">
+  Free local delivery on orders over £25 · <a href="#email">Get 10% off your first order</a> · Order before 4pm for same-week subscription
+</div>
+
+<header class="main-header">
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="Tyne Artisan Bakery — home">
+      <span class="logo-mark"><svg width="32" height="22" aria-hidden="true"><use href="#icon-loaf"/></svg></span>
+      <span class="logo-text">
+        <span class="logo-name">Tyne Artisan Bakery</span>
+        <span class="logo-tag">Newcastle · Est. 2024</span>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#subscription">Subscription</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#find">Find Us</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <button class="header-icon-btn" aria-label="Search products"><svg width="18" height="18"><use href="#icon-search"/></svg></button>
+      <button class="cart-btn-main" id="cart-toggle" aria-label="Open shopping cart">
+        <svg width="18" height="18"><use href="#icon-cart"/></svg><span>Cart</span>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Newcastle's slow-bread bakery</span>
+      <h1 id="hero-heading">Real bread, baked the slow way, <strong>delivered to your door.</strong></h1>
+      <p class="lead">Slow-fermented sourdough, hand-laminated viennoiserie, and celebration cakes that arrive looking like the pictures. Made on Tyneside. Local delivery and click-and-collect.</p>
+      <div class="hero-buttons">
+        <a href="#subscription" class="btn btn-primary">Start a Subscription</a>
+        <a href="#shop" class="btn btn-secondary">Browse the Shop</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">561</div><div class="hero-stat-label">Subscribers</div></div>
+        <div><div class="hero-stat-num">48hr</div><div class="hero-stat-label">Slow ferment</div></div>
+        <div><div class="hero-stat-num">4.9★</div><div class="hero-stat-label">Customer rating</div></div>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <div class="hero-plate"><svg class="hero-loaf-svg" viewBox="0 0 100 70" aria-label="Hand-baked sourdough loaf"><use href="#icon-loaf"/></svg></div>
+      <div class="hero-orbit">
+        <div class="orbit-item i1"><svg width="32" height="42"><use href="#icon-strawberry"/></svg></div>
+        <div class="orbit-item i2"><svg width="44" height="32"><use href="#icon-pastry"/></svg></div>
+        <div class="orbit-item i3"><svg width="32" height="50"><use href="#icon-wheat"/></svg></div>
+        <div class="orbit-item i4"><svg width="44" height="34"><use href="#icon-cake"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shop" aria-labelledby="shop-heading">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">This week's bakes</span>
+      <h2 class="section-title" id="shop-heading">Shop the <em>bakery</em></h2>
+      <p class="section-lead">Made fresh Tuesday through Saturday. Pick a category, choose your collection or delivery slot, done.</p>
+    </div>
+    <div class="products-grid" role="list">
+      <article class="product-card" role="listitem" data-product='{"id":"sourdough","name":"Country Sourdough","price":5.50,"icon":"icon-loaf"}'>
+        <span class="product-badge bestseller">Bestseller</span>
+        <div class="product-img-wrap"><svg aria-label="Country sourdough loaf"><use href="#icon-loaf"/></svg>
+          <svg class="product-img-deco dec1" width="20" height="32"><use href="#icon-wheat"/></svg>
+          <svg class="product-img-deco dec2" width="20" height="32"><use href="#icon-wheat"/></svg></div>
+        <div class="product-body">
+          <p class="product-cat">Sourdough loaves</p>
+          <h3 class="product-name">Country Sourdough</h3>
+          <p class="product-desc">800g loaf, 48-hour cold fermented. Open crumb, deep crust. Our everyday loaf.</p>
+          <div class="product-bottom"><span class="product-price">£5.50</span><button class="product-add" aria-label="Add Country Sourdough to cart">Add to cart</button></div>
+        </div>
+        <div class="product-allergen"><strong>Allergens:</strong> Wheat (gluten). Made in a bakery handling all major allergens.</div>
+      </article>
+      <article class="product-card" role="listitem" data-product='{"id":"croissant","name":"All-Butter Croissant","price":3.20,"icon":"icon-pastry"}'>
+        <span class="product-badge new">New</span>
+        <div class="product-img-wrap"><svg aria-label="All-butter croissant"><use href="#icon-pastry"/></svg>
+          <svg class="product-img-deco dec1" width="22" height="28"><use href="#icon-strawberry"/></svg>
+          <svg class="product-img-deco dec2" width="20" height="32"><use href="#icon-wheat"/></svg></div>
+        <div class="product-body">
+          <p class="product-cat">Viennoiserie</p>
+          <h3 class="product-name">All-Butter Croissant</h3>
+          <p class="product-desc">Hand-laminated, 27 layers. French butter and a long, cold proof. Worth waking up for.</p>
+          <div class="product-bottom"><span class="product-price">£3.20</span><button class="product-add" aria-label="Add All-Butter Croissant to cart">Add to cart</button></div>
+        </div>
+        <div class="product-allergen"><strong>Allergens:</strong> Wheat (gluten), milk, eggs.</div>
+      </article>
+      <article class="product-card" role="listitem" data-product='{"id":"cake","name":"Vanilla & Raspberry Cake","price":42.00,"icon":"icon-cake"}'>
+        <div class="product-img-wrap"><svg aria-label="Vanilla and raspberry celebration cake"><use href="#icon-cake"/></svg>
+          <svg class="product-img-deco dec1" width="22" height="28"><use href="#icon-strawberry"/></svg>
+          <svg class="product-img-deco dec2" width="22" height="28"><use href="#icon-strawberry"/></svg></div>
+        <div class="product-body">
+          <p class="product-cat">Celebration cakes</p>
+          <h3 class="product-name">Vanilla &amp; Raspberry Cake</h3>
+          <p class="product-desc">Three-layer sponge with raspberry compote and Italian buttercream. Serves 8 to 10.</p>
+          <div class="product-bottom"><span class="product-price">£42.00</span><button class="product-add" aria-label="Add Vanilla and Raspberry Cake to cart">Add to cart</button></div>
+        </div>
+        <div class="product-allergen"><strong>Allergens:</strong> Wheat, milk, eggs. May contain nuts.</div>
+      </article>
+      <article class="product-card" role="listitem" data-product='{"id":"box","name":"Weekly Bread Box","price":24.00,"icon":"icon-box"}'>
+        <span class="product-badge">Subscription</span>
+        <div class="product-img-wrap"><svg aria-label="Weekly bread subscription box"><use href="#icon-box"/></svg>
+          <svg class="product-img-deco dec1" width="20" height="32"><use href="#icon-wheat"/></svg>
+          <svg class="product-img-deco dec2" width="20" height="32"><use href="#icon-wheat"/></svg></div>
+        <div class="product-body">
+          <p class="product-cat">Subscription</p>
+          <h3 class="product-name">Weekly Bread Box</h3>
+          <p class="product-desc">Two artisan loaves and a seasonal pastry, delivered or collected each week.</p>
+          <div class="product-bottom"><span class="product-price">£24<small>/wk</small></span><button class="product-add" aria-label="Subscribe to Weekly Bread Box">Subscribe</button></div>
+        </div>
+        <div class="product-allergen"><strong>Allergens:</strong> Varies by loaf. Full list with each delivery.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section subscription-section" id="subscription" aria-labelledby="sub-heading">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Bread subscription</span>
+      <h2 class="section-title" id="sub-heading">Choose your <em>box.</em> We do the rest.</h2>
+      <p class="section-lead">Three boxes, three price points. All made fresh Tuesday to Saturday. Pause any week, cancel any time from your account. No emails needed.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px;">
+
+      <!-- EVERYDAY BOX -->
+      <div class="sub-card" style="border-color:var(--blush-deep);">
+        <span class="sub-card-tier" style="background:var(--blush-deep);color:white;">Everyday</span>
+        <h3 class="sub-card-name">The Everyday Box</h3>
+        <div class="sub-card-price-row">
+          <span class="sub-card-price" style="font-size:38px;">£18</span>
+          <span class="sub-card-price-period">/ week</span>
+        </div>
+        <p style="font-size:12px;color:var(--charcoal);margin-bottom:12px;">The essentials. Fresh bread, zero faff.</p>
+        <div class="sub-card-includes">
+          <h4>Each week</h4>
+          <ul>
+            <li>One Country Sourdough (800g)</li>
+            <li>One Seasonal Loaf (400g)</li>
+            <li>Tasting notes card</li>
+          </ul>
+        </div>
+        <div style="background:var(--cream-light);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:var(--charcoal);">
+          <strong style="color:var(--sage);">In-store collection:</strong> £15.30/wk (15% off)<br>
+          <strong style="color:var(--cinnamon);">Home delivery:</strong> Free over £30, else £2.95
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;background:var(--blush-deep);color:white;" onclick="app.addToCart({id:'everyday-box',name:'Everyday Bread Box',price:18.00,icon:'icon-box'});showToast('Everyday Box added to cart')">Start Everyday Box</button>
+      </div>
+
+      <!-- CLASSIC BOX -->
+      <div class="sub-card" style="border-color:var(--wheat);transform:scale(1.04);box-shadow:0 12px 40px rgba(61,43,31,.2);">
+        <span class="sub-card-tier">Most popular</span>
+        <h3 class="sub-card-name">The Classic Box</h3>
+        <div class="sub-card-price-row">
+          <span class="sub-card-price">£24</span>
+          <span class="sub-card-price-period">/ week</span>
+          <span class="sub-card-strike">£28</span>
+        </div>
+        <p style="font-size:12px;color:var(--charcoal);margin-bottom:12px;">Bread plus one pastry. Our most popular box by a mile.</p>
+        <div class="sub-card-includes">
+          <h4>Each week</h4>
+          <ul>
+            <li>Country Sourdough (800g)</li>
+            <li>One Seasonal Specialty Loaf</li>
+            <li>One Viennoiserie Pastry</li>
+            <li>Recipe card and tasting notes</li>
+          </ul>
+        </div>
+        <div style="background:var(--cream-light);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:var(--charcoal);">
+          <strong style="color:var(--sage);">In-store collection:</strong> £20.40/wk (15% off)<br>
+          <strong style="color:var(--cinnamon);">Home delivery:</strong> Free over £30, else £2.95
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="app.addToCart({id:'classic-box',name:'Classic Bread Box',price:24.00,icon:'icon-box'});showToast('Classic Box added to cart')">Start Classic Box</button>
+        <p style="font-size:10px;color:var(--charcoal);text-align:center;margin-top:8px;">First month: £21/wk with code <strong>FIRST3</strong></p>
+      </div>
+
+      <!-- PREMIUM BOX -->
+      <div class="sub-card" style="border-color:var(--dark);">
+        <span class="sub-card-tier" style="background:var(--dark);color:var(--wheat);">Premium</span>
+        <h3 class="sub-card-name">The Artisan Box</h3>
+        <div class="sub-card-price-row">
+          <span class="sub-card-price" style="font-size:38px;">£38</span>
+          <span class="sub-card-price-period">/ week</span>
+        </div>
+        <p style="font-size:12px;color:var(--charcoal);margin-bottom:12px;">Everything we make, curated for you weekly.</p>
+        <div class="sub-card-includes">
+          <h4>Each week</h4>
+          <ul>
+            <li>Country Sourdough (800g)</li>
+            <li>Two Seasonal Specialty Loaves</li>
+            <li>Two Viennoiserie Pastries</li>
+            <li>Seasonal preserve or condiment</li>
+            <li>Handwritten note from the baker</li>
+          </ul>
+        </div>
+        <div style="background:var(--cream-light);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:var(--charcoal);">
+          <strong style="color:var(--sage);">In-store collection:</strong> £32.30/wk (15% off)<br>
+          <strong style="color:var(--cinnamon);">Home delivery:</strong> Always free (over £30 threshold met)
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;background:var(--dark);color:var(--wheat);" onclick="app.addToCart({id:'artisan-box',name:'Artisan Premium Box',price:38.00,icon:'icon-box'});showToast('Artisan Box added to cart')">Start Artisan Box</button>
+      </div>
+    </div>
+
+    <!-- Fulfilment options note -->
+    <div style="background:var(--cream-light);border:1px solid var(--blush);border-radius:12px;padding:22px 28px;display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;">
+      <div style="flex:1;min-width:180px;">
+        <p style="font-size:13px;font-weight:700;color:var(--sage);margin-bottom:6px;">In-Store Collection — 15% off every week</p>
+        <p style="font-size:12px;color:var(--charcoal);line-height:1.6;">Pick up from 24 Quayside Lane Tuesday to Saturday, 8am to 4pm. Or catch us at the Quayside Sunday Market. Your box will be bagged and labelled. Just give your name.</p>
+      </div>
+      <div style="flex:1;min-width:180px;">
+        <p style="font-size:13px;font-weight:700;color:var(--cinnamon);margin-bottom:6px;">Home Delivery — Free over £30</p>
+        <p style="font-size:12px;color:var(--charcoal);line-height:1.6;">We deliver within 8 miles of Newcastle. Orders under £30 are £2.95 delivery. Classic and Artisan boxes are always free. Everyday box with collection is free too.</p>
+      </div>
+      <div style="flex:1;min-width:180px;">
+        <p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:6px;">No commitment. Ever.</p>
+        <p style="font-size:12px;color:var(--charcoal);line-height:1.6;">Pause any week from your account. Cancel any time — no calls, no forms, no awkward emails. We'd like you to stay because you love the bread, not because cancelling is hard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section values-section" id="about" aria-labelledby="values-heading">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:70px;">
+      <div>
+        <span class="section-eyebrow">Our story</span>
+        <h2 class="section-title" id="values-heading">We started because we couldn't find <em>decent bread.</em></h2>
+        <p style="font-size:16px;color:var(--charcoal);line-height:1.75;margin-bottom:20px;">
+          Honestly. Tom came back from six months in France, tried every bakery in Newcastle, and kept ending up disappointed. Not dramatically, just that low-level sadness of bread that's slightly wrong. So he started making his own. In a flat.
+        </p>
+        <p style="font-size:15px;color:var(--charcoal);line-height:1.7;margin-bottom:20px;">
+          Jen took one taste, told him it was the best thing she'd eaten in a year, and suggested they sell it at the Quayside market. They sold out in 40 minutes. Someone asked if they did subscriptions. They said yes before thinking it through.
+        </p>
+        <p style="font-size:15px;color:var(--charcoal);line-height:1.7;margin-bottom:20px;">
+          That was March 2024. There are three of them now. One oven. One starter (named Frank — he's been going since January 2024 and is doing well). They still sell at the Quayside every Sunday, but now you can get the bread without leaving your house.
+        </p>
+        <p style="font-size:14px;color:var(--blush-deep);font-style:italic;line-height:1.6;">
+          "We don't have any big plans for scale. We just want to make the best loaf we know how to make, as many times as we can manage, and get it to people while it's still worth eating." — Tom &amp; Jen
+        </p>
+      </div>
+      <div style="background:linear-gradient(135deg,var(--dark) 0%,var(--dark-soft) 100%);border-radius:20px;padding:40px;position:relative;overflow:hidden;">
+        <!-- Decorative glow -->
+        <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(201,168,76,.25) 0%,transparent 70%);pointer-events:none;"></div>
+        <div style="position:relative;z-index:1;">
+          <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--wheat);font-weight:700;margin-bottom:24px;">The numbers, honestly</p>
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div style="display:flex;align-items:baseline;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(232,200,181,.15);">
+              <span style="font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:700;color:var(--wheat);line-height:1;">561</span>
+              <span style="font-size:13px;color:var(--blush);line-height:1.5;">subscribers as of February 2026. Started with 93. Frank the starter was a good investment.</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(232,200,181,.15);">
+              <span style="font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:700;color:var(--wheat);line-height:1;">48hr</span>
+              <span style="font-size:13px;color:var(--blush);line-height:1.5;">minimum cold ferment. Most supermarket bread is done in two hours. You can taste the difference.</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(232,200,181,.15);">
+              <span style="font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:700;color:var(--wheat);line-height:1;">8mi</span>
+              <span style="font-size:13px;color:var(--blush);line-height:1.5;">delivery radius. We're not trying to ship to Edinburgh. We want you to get it the same day we bake it.</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:14px;">
+              <span style="font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:700;color:var(--wheat);line-height:1;">1</span>
+              <span style="font-size:13px;color:var(--blush);line-height:1.5;">oven. Three bakers. No shortcuts. That's pretty much the whole business model.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three values below -->
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon"><svg width="32" height="32"><use href="#icon-leaf"/></svg></div>
+        <h3>Slow fermentation</h3>
+        <p>48 hours minimum. The flavour develops properly, the gluten structure breaks down, and your gut thanks you for it. You can't rush it and we don't try.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg width="32" height="32"><use href="#icon-truck"/></svg></div>
+        <h3>Actually local</h3>
+        <p>Within 8 miles of Newcastle. In-store collection with 15% off for subscribers who'd rather just come in. Free delivery when your order is over £30.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><svg width="32" height="32"><use href="#icon-heart"/></svg></div>
+        <h3>Properly small</h3>
+        <p>Three people. One oven. One starter called Frank. No plans to franchise, no plans to sell to a supermarket. Just bread, made right, while we can manage it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials-section" aria-labelledby="t-heading">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">From customers</span>
+      <h2 class="section-title" id="t-heading">Reviews from real <em>subscribers</em></h2>
+      <p class="section-lead">Genuine feedback from our weekly subscription members across the North East.</p>
+    </div>
+    <div class="testimonials-grid">
+      <article class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Best sourdough I have had since living in Paris. The crust is perfect and it actually keeps for three days. The subscription has changed our weekend mornings."</p>
+        <div class="testimonial-author"><div class="testimonial-avatar">SM</div><div><div class="testimonial-name">Sarah M.</div><div class="testimonial-loc">Jesmond, Newcastle</div></div></div>
+      </article>
+      <article class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Sent the celebration cake to my parents in London for their anniversary. They said it was the best cake they had had in years. Will be ordering again."</p>
+        <div class="testimonial-author"><div class="testimonial-avatar">TH</div><div><div class="testimonial-name">Tom H.</div><div class="testimonial-loc">Gosforth, Newcastle</div></div></div>
+      </article>
+      <article class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The pastries that come with the bread box are unreal. The pain au chocolat is the best I have had in the North East. Worth the subscription on its own."</p>
+        <div class="testimonial-author"><div class="testimonial-avatar">AP</div><div><div class="testimonial-name">Amy P.</div><div class="testimonial-loc">Whitley Bay</div></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="email-section" id="email">
+  <div class="email-card">
+    <h3>10% off your <em>first order</em></h3>
+    <p>Join our list for the weekly menu reveal, recipe ideas from the bakery, and early access when we run out of things.</p>
+    <form class="email-form" id="emailForm">
+      <input type="email" id="email-input" class="email-input" placeholder="Your email address" required aria-label="Email address">
+      <button type="submit" class="email-submit">Get 10% off</button>
+    </form>
+    <div id="email-success" style="display:none;color:var(--sage);font-weight:700;margin-top:14px;">✓ Check your inbox to confirm. We use double opt-in for GDPR compliance.</div>
+    <p class="email-disclaimer">By signing up you agree to our <a href="#">privacy policy</a>. Double opt-in. Unsubscribe any time.</p>
+  </div>
+</section>
+
+<section class="section visit-section" id="find">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Visit</span>
+      <h2 class="section-title">Find <em>us</em></h2>
+      <p class="section-lead">Come and pick something up, or catch us at the Quayside Sunday Market.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="visit-card">
+        <h3><svg><use href="#icon-shop"/></svg> The Bakery</h3>
+        <p>24 Quayside Lane<br>Newcastle upon Tyne, NE1 3DZ<br><strong>0191 555 0123</strong></p>
+        <p><strong>Hours:</strong><br>Tue–Sat: 8am–4pm<br>Sunday: 9am–2pm<br>Monday: closed</p>
+      </div>
+      <div class="visit-card">
+        <h3><svg><use href="#icon-market"/></svg> Quayside Sunday Market</h3>
+        <p>Quayside, Newcastle upon Tyne<br>Every Sunday, 9am–3pm<br><strong>Look for the wheat-gold awning</strong></p>
+        <p>We bring everything fresh from the morning bake. Come early, the croissants go fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="main-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <span class="footer-about-logo"><svg width="28" height="20"><use href="#icon-loaf"/></svg> Tyne Artisan Bakery</span>
+      <p class="footer-about">Independent Newcastle bakery making slow-fermented sourdough, hand-laminated viennoiserie, and celebration cakes. Local delivery and click-and-collect from the Quayside.</p>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul><li><a href="#shop">Sourdough</a></li><li><a href="#shop">Pastries</a></li><li><a href="#shop">Celebration Cakes</a></li><li><a href="#subscription">Subscription Box</a></li></ul></div>
+    <div class="footer-col"><h4>Help</h4><ul><li><a href="#">Delivery &amp; Collection</a></li><li><a href="#">Allergen information</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact us</a></li></ul></div>
+    <div class="footer-col"><h4>Follow</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">Facebook</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Tyne Artisan Bakery. Registered in England.</p>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Cookies</a><a href="#">Terms</a><a href="#">Accessibility</a></div>
+  </div>
+</footer>
+
+<div class="cart-drawer-backdrop" id="cart-backdrop"></div>
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Shopping cart">
+  <div class="cart-drawer-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close-btn" id="cart-close" aria-label="Close cart">×</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total"><span class="cart-total-label">Subtotal</span><span class="cart-total-amount" id="cart-total">£0.00</span></div>
+    <button class="cart-checkout-btn" id="cart-checkout" disabled>Checkout</button>
+    <p class="cart-note">Free local delivery on orders over £25</p>
+  </div>
+</aside>
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-header">
+    <div class="cookie-icon"><svg width="26" height="26"><use href="#icon-cookie"/></svg></div>
+    <h3>Cookies, but not the kind we bake</h3>
+  </div>
+  <p>We use cookies to make the site work and to understand what is working. Some are necessary, others are optional. <strong>You choose. Change your mind anytime.</strong></p>
+  <div class="cookie-buttons">
+    <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Accept all</button>
+    <button class="cookie-btn cookie-btn-reject" id="cookie-reject">Reject all</button>
+    <button class="cookie-btn cookie-btn-manage" id="cookie-manage">Manage</button>
+  </div>
+</div>
+
+<div class="cookie-modal-backdrop" id="cookie-modal-backdrop">
+  <div class="cookie-modal" role="dialog" aria-label="Cookie preferences">
+    <h3>Cookie Preferences</h3>
+    <p>Choose what we can use. You can change this any time from the footer.</p>
+    <div class="cookie-pref">
+      <div class="cookie-pref-text">
+        <div class="cookie-pref-name">Necessary</div>
+        <div class="cookie-pref-desc">Required for the site to work, including the cart. <span class="cookie-pref-required">Always on</span></div>
+      </div>
+      <div class="toggle on disabled"></div>
+    </div>
+    <div class="cookie-pref">
+      <div class="cookie-pref-text">
+        <div class="cookie-pref-name">Analytics</div>
+        <div class="cookie-pref-desc">Helps us understand which products and pages people use. Anonymous, no third-party sharing.</div>
+      </div>
+      <div class="toggle" id="toggle-analytics" tabindex="0" role="checkbox" aria-checked="false"></div>
+    </div>
+    <div class="cookie-pref">
+      <div class="cookie-pref-text">
+        <div class="cookie-pref-name">Marketing</div>
+        <div class="cookie-pref-desc">Used for personalised ads and retargeting on Meta and Google.</div>
+      </div>
+      <div class="toggle" id="toggle-marketing" tabindex="0" role="checkbox" aria-checked="false"></div>
+    </div>
+    <div class="cookie-modal-footer">
+      <button class="cookie-btn cookie-btn-manage" id="cookie-modal-reject">Reject all</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-modal-save">Save my choices</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-text"></span></div>
+
+<script>
+const cart = [];
+const cartDrawer = document.getElementById('cart-drawer');
+const cartBackdrop = document.getElementById('cart-backdrop');
+const cartItems = document.getElementById('cart-items');
+const cartCount = document.getElementById('cart-count');
+const cartTotal = document.getElementById('cart-total');
+const cartCheckout = document.getElementById('cart-checkout');
+const toast = document.getElementById('toast');
+const toastText = document.getElementById('toast-text');
+let toastTimeout;
+
+function showToast(msg) {
+  toastText.textContent = msg;
+  toast.classList.add('shown');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('shown'), 2400);
+}
+
+function renderCart() {
+  if (cart.length === 0) {
+    cartItems.innerHTML = `<div class="cart-empty"><svg width="80" height="80"><use href="#icon-cart-empty"/></svg><p>Your cart is empty.<br>Time to add something delicious.</p></div>`;
+    cartCheckout.disabled = true;
+  } else {
+    cartItems.innerHTML = cart.map((item, idx) => `
+      <div class="cart-item">
+        <div class="cart-item-img"><svg width="42" height="32"><use href="#${item.icon}"/></svg></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">£${(item.price * item.qty).toFixed(2)}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="updateQty(${idx}, -1)" aria-label="Decrease">−</button>
+            <span class="qty-display">${item.qty}</span>
+            <button class="qty-btn" onclick="updateQty(${idx}, 1)" aria-label="Increase">+</button>
+            <button class="cart-item-remove" onclick="removeItem(${idx})">Remove</button>
+          </div>
+        </div>
+      </div>`).join('');
+    cartCheckout.disabled = false;
+  }
+  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+  const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  cartCount.textContent = totalQty;
+  cartTotal.textContent = '£' + totalPrice.toFixed(2);
+}
+
+function addToCart(product) {
+  const existing = cart.find(i => i.id === product.id);
+  if (existing) existing.qty++;
+  else cart.push({ ...product, qty: 1 });
+  renderCart();
+// Compatibility bridge for subscription tier buttons
+const app = { addToCart: addToCart };
+}
+
+function updateQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  renderCart();
+// Compatibility bridge for subscription tier buttons
+const app = { addToCart: addToCart };
+}
+
+function removeItem(idx) {
+  const removed = cart.splice(idx, 1)[0];
+  showToast(`${removed.name} removed`);
+  renderCart();
+// Compatibility bridge for subscription tier buttons
+const app = { addToCart: addToCart };
+}
+
+document.getElementById('cart-toggle').addEventListener('click', () => {
+  cartDrawer.classList.add('shown');
+  cartBackdrop.classList.add('shown');
+});
+document.getElementById('cart-close').addEventListener('click', () => {
+  cartDrawer.classList.remove('shown');
+  cartBackdrop.classList.remove('shown');
+});
+cartBackdrop.addEventListener('click', () => {
+  cartDrawer.classList.remove('shown');
+  cartBackdrop.classList.remove('shown');
+});
+
+document.querySelectorAll('.product-add').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const card = e.target.closest('.product-card');
+    const product = JSON.parse(card.dataset.product);
+    addToCart(product);
+    btn.textContent = 'Added ✓';
+    btn.classList.add('added');
+    showToast(`${product.name} added to cart`);
+    setTimeout(() => {
+      btn.textContent = product.id === 'box' ? 'Subscribe' : 'Add to cart';
+      btn.classList.remove('added');
+    }, 1800);
+  });
+});
+
+cartCheckout.addEventListener('click', () => {
+  if (cart.length === 0) return;
+  showToast('Demo: this would open Shopify checkout');
+});
+
+document.getElementById('emailForm').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('email-success').style.display = 'block';
+  e.target.style.display = 'none';
+  showToast('Thanks! Check your inbox for the confirmation link.');
+});
+
+const cookieBanner = document.getElementById('cookie-banner');
+const cookieModalBackdrop = document.getElementById('cookie-modal-backdrop');
+const rejectBtn = document.getElementById('cookie-reject');
+let dodgeCount = 0;
+
+document.getElementById('cookie-accept').addEventListener('click', () => {
+  cookieBanner.classList.add('hidden');
+  showToast('All cookies accepted. You can change this anytime.');
+});
+
+rejectBtn.addEventListener('mouseenter', () => {
+  if (dodgeCount < 2) {
+    const dirX = (Math.random() - 0.5) * 200;
+    const dirY = (Math.random() - 0.5) * 60;
+    rejectBtn.style.transform = `translate(${dirX}px, ${dirY}px)`;
+    dodgeCount++;
+    setTimeout(() => { rejectBtn.style.transform = ''; }, 600);
+  }
+});
+
+rejectBtn.addEventListener('click', () => {
+  cookieBanner.classList.add('hidden');
+  showToast('Only necessary cookies will be used.');
+});
+
+document.getElementById('cookie-manage').addEventListener('click', () => {
+  cookieModalBackdrop.classList.add('shown');
+});
+
+document.querySelectorAll('.toggle:not(.disabled)').forEach(toggle => {
+  const flip = () => {
+    toggle.classList.toggle('on');
+    toggle.setAttribute('aria-checked', toggle.classList.contains('on'));
+  };
+  toggle.addEventListener('click', flip);
+  toggle.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+  });
+});
+
+document.getElementById('cookie-modal-save').addEventListener('click', () => {
+  const a = document.getElementById('toggle-analytics').classList.contains('on');
+  const m = document.getElementById('toggle-marketing').classList.contains('on');
+  cookieModalBackdrop.classList.remove('shown');
+  cookieBanner.classList.add('hidden');
+  let msg = 'Necessary cookies';
+  if (a) msg += ', analytics';
+  if (m) msg += ', marketing';
+  msg += ' enabled.';
+  showToast(msg);
+});
+
+document.getElementById('cookie-modal-reject').addEventListener('click', () => {
+  document.querySelectorAll('.toggle:not(.disabled)').forEach(t => {
+    t.classList.remove('on');
+    t.setAttribute('aria-checked', 'false');
+  });
+  cookieModalBackdrop.classList.remove('shown');
+  cookieBanner.classList.add('hidden');
+  showToast('Only necessary cookies will be used.');
+});
+
+cookieModalBackdrop.addEventListener('click', e => {
+  if (e.target === cookieModalBackdrop) cookieModalBackdrop.classList.remove('shown');
+});
+
+renderCart();
+// Compatibility bridge for subscription tier buttons
+const app = { addToCart: addToCart };
+</script>
+</body>
+</html>
