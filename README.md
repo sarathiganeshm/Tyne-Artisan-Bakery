@@ -97,17 +97,8 @@ The URL will also appear at the top of the Pages settings page once it's live.
 
 This site was built as part of the digital go-to-market strategy for Tyne Artisan Bakery (TAB), a fictional Newcastle-based independent bakery used as the case study for ISO8005 at Newcastle University Business School (AY2025–26).
 
-The report it accompanies covers: SMART objectives, e-commerce MVP, channel and content strategy, analytics framework, 24-month data analysis, 12-month revenue forecast, and ethics/privacy/accessibility. The data analysis was conducted in `TAB_Dataset.xlsx` and visualised in Power BI.
+The report it accompanies covers: SMART objectives, e-commerce MVP, channel and content strategy, analytics framework, 24-month data analysis, 12-month revenue forecast, and ethics/privacy/accessibility. The data analysis was conducted in `TAB_Dataset.xlsx` and visualised in Tableau.
 
-All development files, including this website, the Excel workbook, and the Power BI `.pbix` file, are retained in accordance with the Newcastle University assignment cover sheet declaration (minimum 3 months, available within 5 working days on request).
-
----
-
-## Commit history as authorship evidence
-
-Every commit to this repository is timestamped under your GitHub account. If you make genuine edits over multiple sessions — adjusting copy, tweaking colours, updating the story section — those commits build a verifiable record of progressive authorship. This is useful both for the University's development work retention requirement and as a secondary record of original work.
-
-To see the full history: **Repository → Commits** (or `git log` locally).
 
 ---
 
